@@ -1,1 +1,32 @@
-{"info":{"title":"Predictive Access SDK","description":"The official Predictive Access SDK","version":"1.0.0"},"openapi":"3.0.0"}
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Predictive Access SDK",
+    "description": "The official Predictive Access SDK",
+    "version": "1.0.0"
+  },
+  "components": {
+    "securitySchemes": {
+      "basic_auth": {
+        "type": "http",
+        "description": "Basic authentication supports root credentials. The identifier can be either your email or username.",
+        "scheme": "Basic"
+      },
+      "session_auth": {
+        "type": "http",
+        "description": "Authenticated tokens can be used to provide client session authentication.",
+        "scheme": "Bearer"
+      },
+      "validation_auth": {
+        "type": "http",
+        "description": "Unconfirmed users are issued with a time sensitive bearer token via email which they must supply for one time validation.",
+        "scheme": "Bearer"
+      },
+      "key_auth": {
+        "type": "http",
+        "description": "Predictive uses asymmetric API keys to authenticate. For more information on how to generate a digest request signature please see the API documentation.",
+        "scheme": "Digest"
+      }
+    }
+  }
+}
