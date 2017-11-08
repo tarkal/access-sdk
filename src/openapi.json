@@ -189,17 +189,50 @@
       },
       "patch": {
         "summary": "modify_account"
-      }
+      },
+      "parameters": [
+        {
+          "name": "accountId",
+          "in": "path",
+          "description": "The id of the account.",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
     },
     "/accounts/{accountId}/datas": {
       "put": {
         "summary": "update_account_data"
-      }
+      },
+      "parameters": [
+        {
+          "name": "accountId",
+          "in": "path",
+          "description": "The id of the account.",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
     },
     "/accounts/{accountId}/users": {
       "get": {
         "summary": "get_account_users"
-      }
+      },
+      "parameters": [
+        {
+          "name": "accountId",
+          "in": "path",
+          "description": "The id of the account.",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
     },
     "/users": {
       "get": {
@@ -218,17 +251,47 @@
       },
       "patch": {
         "summary": "modify_user"
-      }
+      },
+      "parameters": [
+        {
+          "name": "userId",
+          "in": "path",
+          "description": "The id of the user.",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
     },
     "/users/{userId}/datas": {
       "put": {
         "summary": "update_user_data"
-      }
+      },
+      "parameters": [
+        {
+          "name": "userId",
+          "in": "path",
+          "description": "The id of the user.",
+          "required": true
+        }
+      ]
     },
     "/users/{userId}/roles": {
       "get": {
         "summary": "get_user_roles"
-      }
+      },
+      "parameters": [
+        {
+          "name": "userId",
+          "in": "path",
+          "description": "The id of the user.",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
     },
     "/users/{userId}/roles/{roleId}": {
       "put": {
@@ -236,12 +299,43 @@
       },
       "delete": {
         "summary": "remove_role_from_user"
-      }
+      },
+      "parameters": [
+        {
+          "name": "userId",
+          "in": "path",
+          "description": "The id of the user.",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "roleId",
+          "in": "path",
+          "description": "The id of the role.",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
     },
     "/users/{userId}/groups": {
       "get": {
         "summary": "get_user_groups"
-      }
+      },
+      "parameters": [
+        {
+          "name": "userId",
+          "in": "path",
+          "description": "The id of the user.",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
     },
     "/users/{userId}/groups/{groupId}": {
       "put": {
@@ -249,7 +343,27 @@
       },
       "delete": {
         "summary": "remove_group_from_user"
-      }
+      },
+      "parameters": [
+        {
+          "name": "userId",
+          "in": "path",
+          "description": "The id of the user.",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "groupId",
+          "in": "path",
+          "description": "The id of the group.",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
     },
     "/groups": {
       "get": {
@@ -268,17 +382,50 @@
       },
       "patch": {
         "summary": "modify_group"
-      }
+      },
+      "parameters": [
+        {
+          "name": "groupId",
+          "in": "path",
+          "description": "The id of the group.",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
     },
     "/groups/{groupId}/datas": {
       "put": {
         "summary": "update_group_data"
-      }
+      },
+      "parameters": [
+        {
+          "name": "groupId",
+          "in": "path",
+          "description": "The id of the group.",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
     },
     "/groups/{groupId}/roles": {
       "get": {
         "summary": "get_group_roles"
-      }
+      },
+      "parameters": [
+        {
+          "name": "groupId",
+          "in": "path",
+          "description": "The id of the group.",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
     },
     "/groups/{groupId}/roles/{roleId}": {
       "put": {
@@ -286,12 +433,43 @@
       },
       "delete": {
         "summary": "remove_role_from_group"
-      }
+      },
+      "parameters": [
+        {
+          "name": "groupId",
+          "in": "path",
+          "description": "The id of the group.",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "roleId",
+          "in": "path",
+          "description": "The id of the role.",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
     },
     "/groups/{groupId}/users": {
       "get": {
         "summary": "get_group_users"
-      }
+      },
+      "parameters": [
+        {
+          "name": "groupId",
+          "in": "path",
+          "description": "The id of the group.",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
     },
     "/roles": {
       "get": {
@@ -310,12 +488,34 @@
       },
       "patch": {
         "summary": "modify_role"
-      }
+      },
+      "parameters": [
+        {
+          "name": "roleId",
+          "in": "path",
+          "description": "The id of the role.",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
     },
     "/roles/{roleId}/statements": {
       "post": {
         "summary": "create_statement_for_role"
-      }
+      },
+      "parameters": [
+        {
+          "name": "roleId",
+          "in": "path",
+          "description": "The id of the role.",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
     },
     "/roles/{roleId}/statements/{statementId}": {
       "put": {
@@ -323,7 +523,27 @@
       },
       "delete": {
         "summary": "delete_statement_from_role"
-      }
+      },
+      "parameters": [
+        {
+          "name": "roleId",
+          "in": "path",
+          "description": "The id of the role.",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "statementId",
+          "in": "path",
+          "description": "The id of the statement.",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
     },
     "/logs/groups": {
       "get": {
@@ -336,27 +556,118 @@
       },
       "delete": {
         "summary": "delete_log_group"
-      }
+      },
+      "parameters": [
+        {
+          "name": "groupId",
+          "in": "path",
+          "description": "The id of the log group.",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
     },
     "/logs/groups/{groupId}/streams": {
       "get": {
         "summary": "get_log_streams"
-      }
+      },
+      "parameters": [
+        {
+          "name": "groupId",
+          "in": "path",
+          "description": "The id of the log group.",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
     },
     "/logs/groups/{groupId}/streams/{streamId}": {
       "get": {
         "summary": "get_log_stream"
-      }
+      },
+      "parameters": [
+        {
+          "name": "groupId",
+          "in": "path",
+          "description": "The id of the log group.",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "streamId",
+          "in": "path",
+          "description": "The id of the log stream.",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
     },
     "/logs/groups/{groupId}/streams/{streamId}/events": {
       "get": {
         "summary": "get_log_events"
-      }
+      },
+      "parameters": [
+        {
+          "name": "groupId",
+          "in": "path",
+          "description": "The id of the log group.",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "streamId",
+          "in": "path",
+          "description": "The id of the log stream.",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
     },
     "/logs/groups/{groupId}/streams/{streamId}/events/{eventId}": {
       "get": {
         "summary": "get_log_event"
-      }
+      },
+      "parameters": [
+        {
+          "name": "groupId",
+          "in": "path",
+          "description": "The id of the log group.",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "streamId",
+          "in": "path",
+          "description": "The id of the log stream.",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "eventId",
+          "in": "path",
+          "description": "The id of the log event.",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
     },
     "/apikeys": {
       "get": {
@@ -375,7 +686,17 @@
       },
       "patch": {
         "summary": "modify_api_key"
-      }
+      },
+      "parameters": [
+        {
+          "name": "apikeyId",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
     },
     "/privileges": {
       "get": {
