@@ -92,7 +92,7 @@
             }
           },
           "403": {
-            "description": "If the request is badly formatted. For specific information see the message in the response.",
+            "description": "If the caller has insufficient privileges to perform the requested action.",
             "content": {
               "application/json": {
                 "schema": {
@@ -148,7 +148,7 @@
             }
           },
           "403": {
-            "description": "If the request is badly formatted. For specific information see the message in the response.",
+            "description": "If the caller has insufficient privileges to perform the requested action.",
             "content": {
               "application/json": {
                 "schema": {
@@ -183,15 +183,204 @@
     "/accounts/{accountId}": {
       "get": {
         "summary": "get_account",
-        "description": "Retrieve a specific account by its id."
+        "description": "Retrieve a specific account by its id.",
+        "parameters": [
+          {
+            "name": "fields",
+            "in": "query",
+            "description": "A comma separated list of property fields that should be included in the response model. These values must exist as a properties of the response object. The id field will always be returned regardless.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The requested account.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemasaccount"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "If the request is badly formatted. For specific information see the message in the response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "If the credentials used to make the call are invalid or expired.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "If the caller has insufficient privileges to perform the requested action.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "If the resource with the specified id does not exist.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "On rare occasions it is possible that a requests triggers an undefined error. These are reported automatically to the development team.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          }
+        }
       },
       "delete": {
         "summary": "delete_account",
-        "description": "Delete an account along with all its associated resource and users."
+        "description": "Delete an account along with all its associated resource and users.",
+        "responses": {
+          "204": {
+            "description": "The account was successfully deleted."
+          },
+          "400": {
+            "description": "If the request is badly formatted. For specific information see the message in the response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "If the credentials used to make the call are invalid or expired.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "If the caller has insufficient privileges to perform the requested action.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "If the resource with the specified id does not exist.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "On rare occasions it is possible that a requests triggers an undefined error. These are reported automatically to the development team.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          }
+        }
       },
       "patch": {
         "summary": "modify_account",
-        "description": "Modify an account. Only supplied properties that differ from the existing will be patched."
+        "description": "Modify an account. Only supplied properties that differ from the existing will be patched.",
+        "responses": {
+          "201": {
+            "description": "The complete modified `account`.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemasaccount"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "If the request is badly formatted. For specific information see the message in the response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "If the credentials used to make the call are invalid or expired.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "If the caller has insufficient privileges to perform the requested action.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "On rare occasions it is possible that a requests triggers an undefined error. These are reported automatically to the development team.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemasaccount"
+              }
+            }
+          },
+          "required": true
+        }
       },
       "parameters": [
         {
@@ -208,7 +397,69 @@
     "/accounts/{accountId}/datas": {
       "put": {
         "summary": "update_account_data",
-        "description": "Update an account data with a new one. The operation is idempotent and the entire model is replaced. To set the data object as empty you must put an object with a single empty KVP: { \"\": [] }"
+        "description": "Update an account data with a new one. The operation is idempotent and the entire model is replaced. To set the data object as empty you must put an object with a single empty KVP: { \"\": [] }",
+        "responses": {
+          "201": {
+            "description": "The complete modified `data`.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemasdata"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "If the request is badly formatted. For specific information see the message in the response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "If the credentials used to make the call are invalid or expired.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "If the caller has insufficient privileges to perform the requested action.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "On rare occasions it is possible that a requests triggers an undefined error. These are reported automatically to the development team.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemasdata"
+              }
+            }
+          },
+          "required": true
+        }
       },
       "parameters": [
         {
@@ -303,7 +554,7 @@
             }
           },
           "403": {
-            "description": "If the request is badly formatted. For specific information see the message in the response.",
+            "description": "If the caller has insufficient privileges to perform the requested action.",
             "content": {
               "application/json": {
                 "schema": {
@@ -417,7 +668,7 @@
             }
           },
           "403": {
-            "description": "If the request is badly formatted. For specific information see the message in the response.",
+            "description": "If the caller has insufficient privileges to perform the requested action.",
             "content": {
               "application/json": {
                 "schema": {
@@ -473,7 +724,7 @@
             }
           },
           "403": {
-            "description": "If the request is badly formatted. For specific information see the message in the response.",
+            "description": "If the caller has insufficient privileges to perform the requested action.",
             "content": {
               "application/json": {
                 "schema": {
@@ -508,15 +759,204 @@
     "/users/{userId}": {
       "get": {
         "summary": "get_user",
-        "description": "Retrieve a specific user by its id."
+        "description": "Retrieve a specific user by its id.",
+        "parameters": [
+          {
+            "name": "fields",
+            "in": "query",
+            "description": "A comma separated list of property fields that should be included in the response model. These values must exist as a properties of the response object. The id field will always be returned regardless.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The requested user.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemasuser"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "If the request is badly formatted. For specific information see the message in the response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "If the credentials used to make the call are invalid or expired.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "If the caller has insufficient privileges to perform the requested action.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "If the resource with the specified id does not exist.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "On rare occasions it is possible that a requests triggers an undefined error. These are reported automatically to the development team.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          }
+        }
       },
       "delete": {
         "summary": "delete_user",
-        "description": "Delete a user."
+        "description": "Delete a user.",
+        "responses": {
+          "204": {
+            "description": "The user was successfully deleted."
+          },
+          "400": {
+            "description": "If the request is badly formatted. For specific information see the message in the response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "If the credentials used to make the call are invalid or expired.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "If the caller has insufficient privileges to perform the requested action.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "If the resource with the specified id does not exist.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "On rare occasions it is possible that a requests triggers an undefined error. These are reported automatically to the development team.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          }
+        }
       },
       "patch": {
         "summary": "modify_user",
-        "description": "Modify a user. Only supplied properties that differ from the existing will be patched. Note that groups, roles and data have separate functions. Including or omitting them from this function will have no effect."
+        "description": "Modify a user. Only supplied properties that differ from the existing will be patched. Note that groups, roles and data have separate functions. Including or omitting them from this function will have no effect.",
+        "responses": {
+          "201": {
+            "description": "The complete modified `user`.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemasuser"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "If the request is badly formatted. For specific information see the message in the response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "If the credentials used to make the call are invalid or expired.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "If the caller has insufficient privileges to perform the requested action.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "On rare occasions it is possible that a requests triggers an undefined error. These are reported automatically to the development team.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemasuser"
+              }
+            }
+          },
+          "required": true
+        }
       },
       "parameters": [
         {
@@ -533,7 +973,69 @@
     "/users/{userId}/datas": {
       "put": {
         "summary": "update_user_data",
-        "description": "Update a user data with a new one. The operation is idempotent and the entire model is replaced. To set the data object as empty you must put an object with a single empty KVP: { \"\": [] }"
+        "description": "Update a user data with a new one. The operation is idempotent and the entire model is replaced. To set the data object as empty you must put an object with a single empty KVP: { \"\": [] }",
+        "responses": {
+          "201": {
+            "description": "The complete modified `data`.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemasdata"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "If the request is badly formatted. For specific information see the message in the response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "If the credentials used to make the call are invalid or expired.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "If the caller has insufficient privileges to perform the requested action.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "On rare occasions it is possible that a requests triggers an undefined error. These are reported automatically to the development team.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemasdata"
+              }
+            }
+          },
+          "required": true
+        }
       },
       "parameters": [
         {
@@ -625,7 +1127,7 @@
             }
           },
           "403": {
-            "description": "If the request is badly formatted. For specific information see the message in the response.",
+            "description": "If the caller has insufficient privileges to perform the requested action.",
             "content": {
               "application/json": {
                 "schema": {
@@ -661,11 +1163,141 @@
     "/users/{userId}/roles/{roleId}": {
       "put": {
         "summary": "add_role_to_user",
-        "description": "Add a role to a user. Note that this function does not create the user or the role. Both must already exist. This function simply creates a binding between them."
+        "description": "Add a role to a user. Note that this function does not create the user or the role. Both must already exist. This function simply creates a binding between them.",
+        "responses": {
+          "201": {
+            "description": "A complete collection of all the role ids associated to the user after the function is executed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "If the request is badly formatted. For specific information see the message in the response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "If the credentials used to make the call are invalid or expired.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "If the caller has insufficient privileges to perform the requested action.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "If any of the resources do not exist.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "On rare occasions it is possible that a requests triggers an undefined error. These are reported automatically to the development team.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          }
+        }
       },
       "delete": {
         "summary": "remove_role_from_user",
-        "description": "Removes a role from a user. Note that this function does not delete the role, it simply removes the binding between them."
+        "description": "Removes a role from a user. Note that this function does not delete the role, it simply removes the binding between them.",
+        "responses": {
+          "201": {
+            "description": "A complete collection of all the role ids associated to the user after the function is executed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "If the request is badly formatted. For specific information see the message in the response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "If the credentials used to make the call are invalid or expired.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "If the caller has insufficient privileges to perform the requested action.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "If any of the resources do not exist.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "On rare occasions it is possible that a requests triggers an undefined error. These are reported automatically to the development team.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          }
+        }
       },
       "parameters": [
         {
@@ -769,7 +1401,7 @@
             }
           },
           "403": {
-            "description": "If the request is badly formatted. For specific information see the message in the response.",
+            "description": "If the caller has insufficient privileges to perform the requested action.",
             "content": {
               "application/json": {
                 "schema": {
@@ -805,11 +1437,141 @@
     "/users/{userId}/groups/{groupId}": {
       "put": {
         "summary": "add_group_to_user",
-        "description": "Add a group to a user. Note that this function does not create the group or the user. Both must already exist. This function simply creates a binding between them."
+        "description": "Add a group to a user. Note that this function does not create the group or the user. Both must already exist. This function simply creates a binding between them.",
+        "responses": {
+          "201": {
+            "description": "A complete collection of all the group ids associated to the user after the function is executed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "If the request is badly formatted. For specific information see the message in the response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "If the credentials used to make the call are invalid or expired.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "If the caller has insufficient privileges to perform the requested action.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "If any of the resources do not exist.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "On rare occasions it is possible that a requests triggers an undefined error. These are reported automatically to the development team.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          }
+        }
       },
       "delete": {
         "summary": "remove_group_from_user",
-        "description": "Removes a group from a user. Note that this function does not delete the group, it simply removes the binding between them."
+        "description": "Removes a group from a user. Note that this function does not delete the group, it simply removes the binding between them.",
+        "responses": {
+          "201": {
+            "description": "A complete collection of all the group ids associated to the user after the function is executed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "If the request is badly formatted. For specific information see the message in the response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "If the credentials used to make the call are invalid or expired.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "If the caller has insufficient privileges to perform the requested action.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "If any of the resources do not exist.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "On rare occasions it is possible that a requests triggers an undefined error. These are reported automatically to the development team.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          }
+        }
       },
       "parameters": [
         {
@@ -913,7 +1675,7 @@
             }
           },
           "403": {
-            "description": "If the request is badly formatted. For specific information see the message in the response.",
+            "description": "If the caller has insufficient privileges to perform the requested action.",
             "content": {
               "application/json": {
                 "schema": {
@@ -969,7 +1731,7 @@
             }
           },
           "403": {
-            "description": "If the request is badly formatted. For specific information see the message in the response.",
+            "description": "If the caller has insufficient privileges to perform the requested action.",
             "content": {
               "application/json": {
                 "schema": {
@@ -1004,15 +1766,204 @@
     "/groups/{groupId}": {
       "get": {
         "summary": "get_group",
-        "description": "Retrieve a specific group by its id."
+        "description": "Retrieve a specific group by its id.",
+        "parameters": [
+          {
+            "name": "fields",
+            "in": "query",
+            "description": "A comma separated list of property fields that should be included in the response model. These values must exist as a properties of the response object. The id field will always be returned regardless.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The requested group.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemasgroup"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "If the request is badly formatted. For specific information see the message in the response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "If the credentials used to make the call are invalid or expired.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "If the caller has insufficient privileges to perform the requested action.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "If the resource with the specified id does not exist.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "On rare occasions it is possible that a requests triggers an undefined error. These are reported automatically to the development team.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          }
+        }
       },
       "delete": {
         "summary": "delete_group",
-        "description": "Delete a group. All associated roles will be released and all linked users will lose their associated roles."
+        "description": "Delete a group. All associated roles will be released and all linked users will lose their associated roles.",
+        "responses": {
+          "204": {
+            "description": "The group was successfully deleted."
+          },
+          "400": {
+            "description": "If the request is badly formatted. For specific information see the message in the response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "If the credentials used to make the call are invalid or expired.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "If the caller has insufficient privileges to perform the requested action.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "If the resource with the specified id does not exist.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "On rare occasions it is possible that a requests triggers an undefined error. These are reported automatically to the development team.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          }
+        }
       },
       "patch": {
         "summary": "modify_group",
-        "description": "Modify a user. Only supplied properties that differ from the existing will be patched. Note that roles and data have separate functions. Including or omitting them from this function will have no effect."
+        "description": "Modify a group. Only supplied properties that differ from the existing will be patched. Note that roles and data have separate functions. Including or omitting them from this function will have no effect.",
+        "responses": {
+          "201": {
+            "description": "The complete modified `group`.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemasgroup"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "If the request is badly formatted. For specific information see the message in the response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "If the credentials used to make the call are invalid or expired.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "If the caller has insufficient privileges to perform the requested action.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "On rare occasions it is possible that a requests triggers an undefined error. These are reported automatically to the development team.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemasgroup"
+              }
+            }
+          },
+          "required": true
+        }
       },
       "parameters": [
         {
@@ -1029,7 +1980,69 @@
     "/groups/{groupId}/datas": {
       "put": {
         "summary": "update_group_data",
-        "description": "Update a group data with a new one. The operation is idempotent and the entire model is replaced. To set the data object as empty you must put an object with a single empty KVP: { \"\": [] }"
+        "description": "Update a group data with a new one. The operation is idempotent and the entire model is replaced. To set the data object as empty you must put an object with a single empty KVP: { \"\": [] }",
+        "responses": {
+          "201": {
+            "description": "The complete modified `data`.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemasdata"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "If the request is badly formatted. For specific information see the message in the response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "If the credentials used to make the call are invalid or expired.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "If the caller has insufficient privileges to perform the requested action.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "On rare occasions it is possible that a requests triggers an undefined error. These are reported automatically to the development team.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemasdata"
+              }
+            }
+          },
+          "required": true
+        }
       },
       "parameters": [
         {
@@ -1124,7 +2137,7 @@
             }
           },
           "403": {
-            "description": "If the request is badly formatted. For specific information see the message in the response.",
+            "description": "If the caller has insufficient privileges to perform the requested action.",
             "content": {
               "application/json": {
                 "schema": {
@@ -1160,11 +2173,141 @@
     "/groups/{groupId}/roles/{roleId}": {
       "put": {
         "summary": "add_role_to_group",
-        "description": "Add a role to a group. Note that this function does not create the group or the role. Both must already exist. This function simply creates a binding between them."
+        "description": "Add a role to a group. Note that this function does not create the group or the role. Both must already exist. This function simply creates a binding between them.",
+        "responses": {
+          "201": {
+            "description": "A complete collection of all the role ids associated to the group after the function is executed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "If the request is badly formatted. For specific information see the message in the response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "If the credentials used to make the call are invalid or expired.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "If the caller has insufficient privileges to perform the requested action.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "If any of the resources do not exist.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "On rare occasions it is possible that a requests triggers an undefined error. These are reported automatically to the development team.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          }
+        }
       },
       "delete": {
         "summary": "remove_role_from_group",
-        "description": "Removes a role from a group. Note that this function does not delete the role, it simply removes the binding between them."
+        "description": "Removes a role from a group. Note that this function does not delete the role, it simply removes the binding between them.",
+        "responses": {
+          "201": {
+            "description": "A complete collection of all the role ids associated to the group after the function is executed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "If the request is badly formatted. For specific information see the message in the response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "If the credentials used to make the call are invalid or expired.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "If the caller has insufficient privileges to perform the requested action.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "If any of the resources do not exist.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "On rare occasions it is possible that a requests triggers an undefined error. These are reported automatically to the development team.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          }
+        }
       },
       "parameters": [
         {
@@ -1268,7 +2411,7 @@
             }
           },
           "403": {
-            "description": "If the request is badly formatted. For specific information see the message in the response.",
+            "description": "If the caller has insufficient privileges to perform the requested action.",
             "content": {
               "application/json": {
                 "schema": {
@@ -1382,7 +2525,7 @@
             }
           },
           "403": {
-            "description": "If the request is badly formatted. For specific information see the message in the response.",
+            "description": "If the caller has insufficient privileges to perform the requested action.",
             "content": {
               "application/json": {
                 "schema": {
@@ -1438,7 +2581,7 @@
             }
           },
           "403": {
-            "description": "If the request is badly formatted. For specific information see the message in the response.",
+            "description": "If the caller has insufficient privileges to perform the requested action.",
             "content": {
               "application/json": {
                 "schema": {
@@ -1473,15 +2616,204 @@
     "/roles/{roleId}": {
       "get": {
         "summary": "get_role",
-        "description": "Retrieve a specific role by its id."
+        "description": "Retrieve a specific role by its id.",
+        "parameters": [
+          {
+            "name": "fields",
+            "in": "query",
+            "description": "A comma separated list of property fields that should be included in the response model. These values must exist as a properties of the response object. The id field will always be returned regardless.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The requested role.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemasrole"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "If the request is badly formatted. For specific information see the message in the response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "If the credentials used to make the call are invalid or expired.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "If the caller has insufficient privileges to perform the requested action.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "If the resource with the specified id does not exist.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "On rare occasions it is possible that a requests triggers an undefined error. These are reported automatically to the development team.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          }
+        }
       },
       "delete": {
         "summary": "delete_role",
-        "description": "Delete a role. All linked users and groups will lose their associated privileges granted by this role."
+        "description": "Delete a role. All linked users and groups will lose their associated privileges granted by this role.",
+        "responses": {
+          "204": {
+            "description": "The role was successfully deleted."
+          },
+          "400": {
+            "description": "If the request is badly formatted. For specific information see the message in the response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "If the credentials used to make the call are invalid or expired.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "If the caller has insufficient privileges to perform the requested action.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "If the resource with the specified id does not exist.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "On rare occasions it is possible that a requests triggers an undefined error. These are reported automatically to the development team.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          }
+        }
       },
       "patch": {
         "summary": "modify_role",
-        "description": "Modify a role. Only supplied properties that differ from the existing will be patched. Note that statements have separate functions. Including or omitting them from this function will have no effect."
+        "description": "Modify a role. Only supplied properties that differ from the existing will be patched. Note that statements have separate functions. Including or omitting them from this function will have no effect.",
+        "responses": {
+          "201": {
+            "description": "The complete modified `role`.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemasrole"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "If the request is badly formatted. For specific information see the message in the response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "If the credentials used to make the call are invalid or expired.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "If the caller has insufficient privileges to perform the requested action.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "On rare occasions it is possible that a requests triggers an undefined error. These are reported automatically to the development team.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemasrole"
+              }
+            }
+          },
+          "required": true
+        }
       },
       "parameters": [
         {
@@ -1534,7 +2866,7 @@
             }
           },
           "403": {
-            "description": "If the request is badly formatted. For specific information see the message in the response.",
+            "description": "If the caller has insufficient privileges to perform the requested action.",
             "content": {
               "application/json": {
                 "schema": {
@@ -1579,10 +2911,142 @@
     },
     "/roles/{roleId}/statements/{statementId}": {
       "put": {
-        "summary": "modify_role_statement"
+        "summary": "modify_role_statement",
+        "description": "Update a role statement with a new one. The operation is idempotent and the entire model is replaced.",
+        "responses": {
+          "201": {
+            "description": "A complete collection of all the statements associated to the role after the function is executed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/statement"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "If the request is badly formatted. For specific information see the message in the response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "If the credentials used to make the call are invalid or expired.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "If the caller has insufficient privileges to perform the requested action.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "On rare occasions it is possible that a requests triggers an undefined error. These are reported automatically to the development team.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemasstatement"
+              }
+            }
+          },
+          "required": true
+        }
       },
       "delete": {
-        "summary": "delete_statement_from_role"
+        "summary": "delete_statement_from_role",
+        "description": "Removes and deletes a statement from a role in a single function.",
+        "responses": {
+          "201": {
+            "description": "A complete collection of all the statements associated to the role after the function is executed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/statement"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "If the request is badly formatted. For specific information see the message in the response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "If the credentials used to make the call are invalid or expired.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "If the caller has insufficient privileges to perform the requested action.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "If any of the resources do not exist.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "On rare occasions it is possible that a requests triggers an undefined error. These are reported automatically to the development team.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          }
+        }
       },
       "parameters": [
         {
@@ -1686,7 +3150,7 @@
             }
           },
           "403": {
-            "description": "If the request is badly formatted. For specific information see the message in the response.",
+            "description": "If the caller has insufficient privileges to perform the requested action.",
             "content": {
               "application/json": {
                 "schema": {
@@ -1711,11 +3175,138 @@
     "/logs/groups/{groupId}": {
       "get": {
         "summary": "get_log_group",
-        "description": "Retrieve a specific log group by its id."
+        "description": "Retrieve a specific log group by its id.",
+        "parameters": [
+          {
+            "name": "fields",
+            "in": "query",
+            "description": "A comma separated list of property fields that should be included in the response model. These values must exist as a properties of the response object. The id field will always be returned regardless.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The requested log group.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaslog_group"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "If the request is badly formatted. For specific information see the message in the response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "If the credentials used to make the call are invalid or expired.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "If the caller has insufficient privileges to perform the requested action.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "If the resource with the specified id does not exist.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "On rare occasions it is possible that a requests triggers an undefined error. These are reported automatically to the development team.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          }
+        }
       },
       "delete": {
         "summary": "delete_log_group",
-        "description": "Delete a log group. All associated streams and events will be deleted in a cascade."
+        "description": "Delete a log group. All associated streams and events will be deleted in a cascade.",
+        "responses": {
+          "204": {
+            "description": "The log group was successfully deleted."
+          },
+          "400": {
+            "description": "If the request is badly formatted. For specific information see the message in the response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "If the credentials used to make the call are invalid or expired.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "If the caller has insufficient privileges to perform the requested action.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "If the resource with the specified id does not exist.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "On rare occasions it is possible that a requests triggers an undefined error. These are reported automatically to the development team.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          }
+        }
       },
       "parameters": [
         {
@@ -1810,7 +3401,7 @@
             }
           },
           "403": {
-            "description": "If the request is badly formatted. For specific information see the message in the response.",
+            "description": "If the caller has insufficient privileges to perform the requested action.",
             "content": {
               "application/json": {
                 "schema": {
@@ -1846,7 +3437,79 @@
     "/logs/groups/{groupId}/streams/{streamId}": {
       "get": {
         "summary": "get_log_stream",
-        "description": "Retrieve a specific log stream by its id."
+        "description": "Retrieve a specific log stream by its id.",
+        "parameters": [
+          {
+            "name": "fields",
+            "in": "query",
+            "description": "A comma separated list of property fields that should be included in the response model. These values must exist as a properties of the response object. The id field will always be returned regardless.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The requested log stream.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaslog_stream"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "If the request is badly formatted. For specific information see the message in the response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "If the credentials used to make the call are invalid or expired.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "If the caller has insufficient privileges to perform the requested action.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "If the resource with the specified id does not exist.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "On rare occasions it is possible that a requests triggers an undefined error. These are reported automatically to the development team.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          }
+        }
       },
       "parameters": [
         {
@@ -1950,7 +3613,7 @@
             }
           },
           "403": {
-            "description": "If the request is badly formatted. For specific information see the message in the response.",
+            "description": "If the caller has insufficient privileges to perform the requested action.",
             "content": {
               "application/json": {
                 "schema": {
@@ -1995,7 +3658,79 @@
     "/logs/groups/{groupId}/streams/{streamId}/events/{eventId}": {
       "get": {
         "summary": "get_log_event",
-        "description": "Retrieve a specific log event by its id."
+        "description": "Retrieve a specific log event by its id.",
+        "parameters": [
+          {
+            "name": "fields",
+            "in": "query",
+            "description": "A comma separated list of property fields that should be included in the response model. These values must exist as a properties of the response object. The id field will always be returned regardless.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The requested log event.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaslog_event"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "If the request is badly formatted. For specific information see the message in the response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "If the credentials used to make the call are invalid or expired.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "If the caller has insufficient privileges to perform the requested action.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "If the resource with the specified id does not exist.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "On rare occasions it is possible that a requests triggers an undefined error. These are reported automatically to the development team.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          }
+        }
       },
       "parameters": [
         {
@@ -2108,7 +3843,7 @@
             }
           },
           "403": {
-            "description": "If the request is badly formatted. For specific information see the message in the response.",
+            "description": "If the caller has insufficient privileges to perform the requested action.",
             "content": {
               "application/json": {
                 "schema": {
@@ -2164,7 +3899,7 @@
             }
           },
           "403": {
-            "description": "If the request is badly formatted. For specific information see the message in the response.",
+            "description": "If the caller has insufficient privileges to perform the requested action.",
             "content": {
               "application/json": {
                 "schema": {
@@ -2189,15 +3924,204 @@
     "/apikeys/{apikeyId}": {
       "get": {
         "summary": "get_api_key",
-        "description": "Retrieve a specific api key by its id."
+        "description": "Retrieve a specific api key by its id.",
+        "parameters": [
+          {
+            "name": "fields",
+            "in": "query",
+            "description": "A comma separated list of property fields that should be included in the response model. These values must exist as a properties of the response object. The id field will always be returned regardless.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The requested api key.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemasapi_key"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "If the request is badly formatted. For specific information see the message in the response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "If the credentials used to make the call are invalid or expired.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "If the caller has insufficient privileges to perform the requested action.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "If the resource with the specified id does not exist.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "On rare occasions it is possible that a requests triggers an undefined error. These are reported automatically to the development team.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          }
+        }
       },
       "delete": {
         "summary": "delete_api_key",
-        "description": "Delete an API key. The key must belong to the caller."
+        "description": "Delete an API key. The key must belong to the caller.",
+        "responses": {
+          "204": {
+            "description": "The API key was successfully deleted."
+          },
+          "400": {
+            "description": "If the request is badly formatted. For specific information see the message in the response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "If the credentials used to make the call are invalid or expired.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "If the caller has insufficient privileges to perform the requested action.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "If the resource with the specified id does not exist.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "On rare occasions it is possible that a requests triggers an undefined error. These are reported automatically to the development team.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          }
+        }
       },
       "patch": {
         "summary": "modify_api_key",
-        "description": "Modify an api key. Only supplied properties that differ from the existing will be patched. Currently the only supported mutable parameter is the `state`."
+        "description": "Modify an api key. Only supplied properties that differ from the existing will be patched. Currently the only supported mutable parameter is the `state`.",
+        "responses": {
+          "201": {
+            "description": "The complete modified `api key`. Note the private key is not included.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemasapi_key"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "If the request is badly formatted. For specific information see the message in the response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "If the credentials used to make the call are invalid or expired.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "If the caller has insufficient privileges to perform the requested action.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "On rare occasions it is possible that a requests triggers an undefined error. These are reported automatically to the development team.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemasapi_key"
+              }
+            }
+          },
+          "required": true
+        }
       },
       "parameters": [
         {
@@ -2213,13 +4137,107 @@
     "/privileges": {
       "get": {
         "summary": "get_user_privileges",
-        "description": "Retrieve a collection of access privileges for the caller."
+        "description": "Retrieve a collection of access privileges for the caller.",
+        "parameters": [
+          {
+            "name": "level",
+            "in": "query",
+            "description": "By default the response collection will contain service specific privileges. If the level flag is set to `application` a condensed application only collection will be returned.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "If the request is badly formatted. For specific information see the message in the response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "If the credentials used to make the call are invalid or expired.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "If the caller has insufficient privileges to perform the requested action.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "If the resource with the specified id does not exist.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "On rare occasions it is possible that a requests triggers an undefined error. These are reported automatically to the development team.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/sessions": {
       "post": {
         "summary": "create_session",
-        "description": "Create a session between the client and the server."
+        "description": "Create a session between the client and the server.",
+        "responses": {
+          "200": {
+            "description": "The new session.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemassession"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "If the credentials used to make the call are invalid or expired.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "On rare occasions it is possible that a requests triggers an undefined error. These are reported automatically to the development team.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/validations": {
