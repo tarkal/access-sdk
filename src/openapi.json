@@ -192,13 +192,19 @@
       }
     },
     "/accounts/{accountId}/datas": {
-      "put": {}
+      "put": {
+        "summary": "update_account_data"
+      }
     },
     "/accounts/{accountId}/users": {
-      "get": {}
+      "get": {
+        "summary": "get_account_users"
+      }
     },
     "/users": {
-      "get": {},
+      "get": {
+        "summary": "get_users"
+      },
       "post": {
         "summary": "create_user"
       }
@@ -215,21 +221,35 @@
       }
     },
     "/users/{userId}/datas": {
-      "put": {}
+      "put": {
+        "summary": "update_user_data"
+      }
     },
     "/users/{userId}/roles": {
-      "get": {}
+      "get": {
+        "summary": "get_user_roles"
+      }
     },
     "/users/{userId}/roles/{roleId}": {
-      "put": {},
-      "delete": {}
+      "put": {
+        "summary": "add_role_to_user"
+      },
+      "delete": {
+        "summary": "remove_role_from_user"
+      }
     },
     "/users/{userId}/groups": {
-      "get": {}
+      "get": {
+        "summary": "get_user_groups"
+      }
     },
     "/users/{userId}/groups/{groupId}": {
-      "put": {},
-      "delete": {}
+      "put": {
+        "summary": "add_group_to_user"
+      },
+      "delete": {
+        "summary": "remove_group_from_user"
+      }
     },
     "/groups": {
       "get": {
@@ -251,20 +271,32 @@
       }
     },
     "/groups/{groupId}/datas": {
-      "put": {}
+      "put": {
+        "summary": "update_group_data"
+      }
     },
     "/groups/{groupId}/roles": {
-      "get": {}
+      "get": {
+        "summary": "get_group_roles"
+      }
     },
     "/groups/{groupId}/roles/{roleId}": {
-      "put": {},
-      "delete": {}
+      "put": {
+        "summary": "add_role_to_group"
+      },
+      "delete": {
+        "summary": "remove_role_from_group"
+      }
     },
     "/groups/{groupId}/users": {
-      "get": {}
+      "get": {
+        "summary": "get_group_users"
+      }
     },
     "/roles": {
-      "get": {},
+      "get": {
+        "summary": "get_roles"
+      },
       "post": {
         "summary": "create_role"
       }
@@ -281,30 +313,50 @@
       }
     },
     "/roles/{roleId}/statements": {
-      "post": {}
+      "post": {
+        "summary": "create_statement_for_role"
+      }
     },
     "/roles/{roleId}/statements/{statementId}": {
-      "put": {},
-      "delete": {}
+      "put": {
+        "summary": "modify_role_statement"
+      },
+      "delete": {
+        "summary": "delete_statement_from_role"
+      }
     },
     "/logs/groups": {
-      "get": {}
+      "get": {
+        "summary": "get_log_groups"
+      }
     },
     "/logs/groups/{groupId}": {
-      "get": {},
-      "delete": {}
+      "get": {
+        "summary": "get_log_group"
+      },
+      "delete": {
+        "summary": "delete_log_group"
+      }
     },
     "/logs/groups/{groupId}/streams": {
-      "get": {}
+      "get": {
+        "summary": "get_log_streams"
+      }
     },
     "/logs/groups/{groupId}/streams/{streamId}": {
-      "get": {}
+      "get": {
+        "summary": "get_log_stream"
+      }
     },
     "/logs/groups/{groupId}/streams/{streamId}/events": {
-      "get": {}
+      "get": {
+        "summary": "get_log_events"
+      }
     },
     "/logs/groups/{groupId}/streams/{streamId}/events/{eventId}": {
-      "get": {}
+      "get": {
+        "summary": "get_log_event"
+      }
     },
     "/apikeys": {
       "get": {
@@ -327,7 +379,7 @@
     },
     "/privileges": {
       "get": {
-        "summary": "get_privileges"
+        "summary": "get_user_privileges"
       }
     },
     "/sessions": {
