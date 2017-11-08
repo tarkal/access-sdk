@@ -181,9 +181,15 @@
       }
     },
     "/accounts/{accountId}": {
-      "get": {},
-      "delete": {},
-      "patch": {}
+      "get": {
+        "summary": "get_account"
+      },
+      "delete": {
+        "summary": "delete_account"
+      },
+      "patch": {
+        "summary": "modify_account"
+      }
     },
     "/accounts/{accountId}/datas": {
       "put": {}
@@ -193,12 +199,20 @@
     },
     "/users": {
       "get": {},
-      "post": {}
+      "post": {
+        "summary": "create_user"
+      }
     },
     "/users/{userId}": {
-      "get": {},
-      "delete": {},
-      "patch": {}
+      "get": {
+        "summary": "get_user"
+      },
+      "delete": {
+        "summary": "delete_user"
+      },
+      "patch": {
+        "summary": "modify_user"
+      }
     },
     "/users/{userId}/datas": {
       "put": {}
@@ -218,13 +232,23 @@
       "delete": {}
     },
     "/groups": {
-      "get": {},
-      "post": {}
+      "get": {
+        "summary": "get_groups"
+      },
+      "post": {
+        "summary": "create_group"
+      }
     },
     "/groups/{groupId}": {
-      "get": {},
-      "delete": {},
-      "patch": {}
+      "get": {
+        "summary": "get_group"
+      },
+      "delete": {
+        "summary": "delete_group"
+      },
+      "patch": {
+        "summary": "modify_group"
+      }
     },
     "/groups/{groupId}/datas": {
       "put": {}
@@ -241,12 +265,20 @@
     },
     "/roles": {
       "get": {},
-      "post": {}
+      "post": {
+        "summary": "create_role"
+      }
     },
     "/roles/{roleId}": {
-      "get": {},
-      "delete": {},
-      "patch": {}
+      "get": {
+        "summary": "get_role"
+      },
+      "delete": {
+        "summary": "delete_role"
+      },
+      "patch": {
+        "summary": "modify_role"
+      }
     },
     "/roles/{roleId}/statements": {
       "post": {}
@@ -275,25 +307,43 @@
       "get": {}
     },
     "/apikeys": {
-      "get": {},
-      "post": {}
+      "get": {
+        "summary": "get_api_keys"
+      },
+      "post": {
+        "summary": "create_api_key"
+      }
     },
     "/apikeys/{apikeyId}": {
-      "get": {},
-      "delete": {},
-      "patch": {}
+      "get": {
+        "summary": "get_api_key"
+      },
+      "delete": {
+        "summary": "delete_api_key"
+      },
+      "patch": {
+        "summary": "modify_api_key"
+      }
     },
     "/privileges": {
-      "get": {}
+      "get": {
+        "summary": "get_privileges"
+      }
     },
     "/sessions": {
-      "post": {}
+      "post": {
+        "summary": "create_session"
+      }
     },
     "/validations": {
-      "put": {}
+      "put": {
+        "summary": "validate"
+      }
     },
     "/batches": {
-      "post": {}
+      "post": {
+        "summary": "execute_batch_requests"
+      }
     }
   },
   "components": {
