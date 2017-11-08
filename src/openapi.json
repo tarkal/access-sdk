@@ -3,6 +3,11 @@
   "info": {
     "title": "Predictive Access SDK",
     "description": "The official Predictive Access SDK",
+    "contact": {
+      "name": "Predictive Support",
+      "url": "https://predictivetech.io/contact",
+      "email": "support@predictivetech.io"
+    },
     "version": "1.0.0"
   },
   "components": {
@@ -28,5 +33,31 @@
         "scheme": "Digest"
       }
     }
-  }
+  },
+  "tags": [
+    {
+      "name": "account",
+      "description": "Administrative operations accessible only by system administrators. These operations are not available for general use and will result in 404 response."
+    },
+    {
+      "name": "user",
+      "description": "Operations for controlling users and their associated privileges through groups and roles."
+    },
+    {
+      "name": "group",
+      "description": "Operations for controlling groups and their association with roles and users."
+    },
+    {
+      "name": "role",
+      "description": "Operations for controlling roles. These are the fundamental privilege models that determine a users access and functional capabilities."
+    },
+    {
+      "name": "log",
+      "description": "Operations for controlling logs. Logs are user requested loggings of system events. To facilitate interaction with logs they are categorised using groups and streams. Groups are user defined names to categorise the log into distinct groups. Streams are are a subdivision of groups using the originating service and a temporal marker."
+    },
+    {
+      "name": "api key",
+      "description": "Operations for controlling API keys. These operations can only be performed by and for the original calling user."
+    }
+  ]
 }
