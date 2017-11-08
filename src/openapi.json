@@ -118,7 +118,7 @@
             "type": "string"
           },
           "operator": {
-            "description": "The required operator to define the evaluation comparison that must be achieved during evaluation. These values can be: `equal`, `not equal`, `in`, `not in`, `start`, `not start`, `end`, `not end`, `less`, `less or equal`, `greater`, `greater or equal`.",
+            "description": "The required operator to define the evaluation comparison that must be achieved during evaluation. These values can be: `equal`, `not equal`, `in`, `not in`, `start`, `not start`, `end`, `not end`, `less`, `less or equal`, `greater` or `greater or equal`.",
             "type": "string"
           },
           "value": {
@@ -131,7 +131,21 @@
           }
         }
       },
-      "expression": {},
+      "expression": {
+        "properties": {
+          "condition": {
+            "description": "The logical condition that should be applied to the rule evaluation. This can be `AND` or `OR`.",
+            "type": "string"
+          },
+          "rules": {
+            "description": "A collection of rules that are to be evaluated as part of this expression.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/rule"
+            }
+          }
+        }
+      },
       "statement": {},
       "role": {}
     },
