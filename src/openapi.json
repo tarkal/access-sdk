@@ -180,38 +180,121 @@
         }
       }
     },
-    "/accounts/{accountId}": {},
-    "/accounts/{accountId}/datas": {},
-    "/accounts/{accountId}/users": {},
-    "/users": {},
-    "/users/{userId}": {},
-    "/users/{userId}/datas": {},
-    "/users/{userId}/roles": {},
-    "/users/{userId}/roles/{roleId}": {},
-    "/users/{userId}/groups": {},
-    "/users/{userId}/groups/{groupId}": {},
-    "/groups": {},
-    "/groups/{groupId}": {},
-    "/groups/{groupId}/datas": {},
-    "/groups/{groupId}/roles": {},
-    "/groups/{groupId}/roles/{roleId}": {},
-    "/groups/{groupId}/users": {},
-    "/roles": {},
-    "/roles/{roleId}": {},
-    "/roles/{roleId}/statements": {},
-    "/roles/{roleId}/statements/{statementId}": {},
-    "/logs/groups": {},
-    "/logs/groups/{groupId}": {},
-    "/logs/groups/{groupId}/streams": {},
-    "/logs/groups/{groupId}/streams/{streamId}": {},
-    "/logs/groups/{groupId}/streams/{streamId}/events": {},
-    "/logs/groups/{groupId}/streams/{streamId}/events/{eventId}": {},
-    "/apikeys": {},
-    "/apikeys/{apikeyId}": {},
-    "/privileges": {},
-    "/sessions": {},
-    "/validations": {},
-    "/batches": {}
+    "/accounts/{accountId}": {
+      "get": {},
+      "delete": {},
+      "patch": {}
+    },
+    "/accounts/{accountId}/datas": {
+      "put": {}
+    },
+    "/accounts/{accountId}/users": {
+      "get": {}
+    },
+    "/users": {
+      "get": {},
+      "post": {}
+    },
+    "/users/{userId}": {
+      "get": {},
+      "delete": {},
+      "patch": {}
+    },
+    "/users/{userId}/datas": {
+      "put": {}
+    },
+    "/users/{userId}/roles": {
+      "get": {}
+    },
+    "/users/{userId}/roles/{roleId}": {
+      "put": {},
+      "delete": {}
+    },
+    "/users/{userId}/groups": {
+      "get": {}
+    },
+    "/users/{userId}/groups/{groupId}": {
+      "put": {},
+      "delete": {}
+    },
+    "/groups": {
+      "get": {},
+      "post": {}
+    },
+    "/groups/{groupId}": {
+      "get": {},
+      "delete": {},
+      "patch": {}
+    },
+    "/groups/{groupId}/datas": {
+      "put": {}
+    },
+    "/groups/{groupId}/roles": {
+      "get": {}
+    },
+    "/groups/{groupId}/roles/{roleId}": {
+      "put": {},
+      "delete": {}
+    },
+    "/groups/{groupId}/users": {
+      "get": {}
+    },
+    "/roles": {
+      "get": {},
+      "post": {}
+    },
+    "/roles/{roleId}": {
+      "get": {},
+      "delete": {},
+      "patch": {}
+    },
+    "/roles/{roleId}/statements": {
+      "post": {}
+    },
+    "/roles/{roleId}/statements/{statementId}": {
+      "put": {},
+      "delete": {}
+    },
+    "/logs/groups": {
+      "get": {}
+    },
+    "/logs/groups/{groupId}": {
+      "get": {},
+      "delete": {}
+    },
+    "/logs/groups/{groupId}/streams": {
+      "get": {}
+    },
+    "/logs/groups/{groupId}/streams/{streamId}": {
+      "get": {}
+    },
+    "/logs/groups/{groupId}/streams/{streamId}/events": {
+      "get": {}
+    },
+    "/logs/groups/{groupId}/streams/{streamId}/events/{eventId}": {
+      "get": {}
+    },
+    "/apikeys": {
+      "get": {},
+      "post": {}
+    },
+    "/apikeys/{apikeyId}": {
+      "get": {},
+      "delete": {},
+      "patch": {}
+    },
+    "/privileges": {
+      "get": {}
+    },
+    "/sessions": {
+      "post": {}
+    },
+    "/validations": {
+      "put": {}
+    },
+    "/batches": {
+      "post": {}
+    }
   },
   "components": {
     "schemas": {
