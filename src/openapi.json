@@ -4240,16 +4240,51 @@
         }
       }
     },
-    "/validations": {
-      "put": {
-        "summary": "validate",
-        "description": "Validate a new user account."
-      }
-    },
     "/batches": {
       "post": {
         "summary": "execute_batch_requests",
         "description": "Executes a custom collection of requests in a single call."
+      }
+    },
+    "/validations": {
+      "put": {
+        "summary": "validate",
+        "description": "Validate a new user account.",
+        "responses": {
+          "204": {
+            "description": "The validation was successful."
+          },
+          "401": {
+            "description": "If the credentials used to make the call are invalid or expired.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "On rare occasions it is possible that a requests triggers an undefined error. These are reported automatically to the development team.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemasvalidation"
+              }
+            }
+          },
+          "required": true
+        }
       }
     }
   },
