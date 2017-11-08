@@ -65,7 +65,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/user"
+                    "$ref": "#/components/schemas/account"
                   }
                 }
               }
@@ -220,7 +220,104 @@
     },
     "/accounts/{accountId}/users": {
       "get": {
-        "summary": "get_account_users"
+        "summary": "get_account_users",
+        "parameters": [
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "The field name that should be used to sort the resulting collection. This value must exist as a property of the response object otherwise a default sort will be applied.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "The page number to request. If the value is larger than the maximum pages available the last page will be returned. If a value less than 1 is specified the first page will be returned. Collection information is available in the headers.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "perPage",
+            "in": "query",
+            "description": "The number of records to include in a single page. If a value of less than 1 is specified a best effort to return the whole collection will be made. This is not guaranteed and the response headers should be checked to obtain any additional pages.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "fields",
+            "in": "query",
+            "description": "A comma separated list of property fields that should be included in the response model. These values must exist as a properties of the response object. The id field will always be returned regardless.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "description": "A URL encoded query filter. For more information on filter formats see the documentation.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A collection (or subset) of accounts based on the callers privileges and the query parameters.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/user"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "If the request is badly formatted. For specific information see the message in the response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "If the credentials used to make the call are invalid or expired.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "If the request is badly formatted. For specific information see the message in the response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "On rare occasions it is possible that a requests triggers an undefined error. These are reported automatically to the development team.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          }
+        }
       },
       "parameters": [
         {
@@ -236,7 +333,104 @@
     },
     "/users": {
       "get": {
-        "summary": "get_users"
+        "summary": "get_users",
+        "parameters": [
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "The field name that should be used to sort the resulting collection. This value must exist as a property of the response object otherwise a default sort will be applied.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "The page number to request. If the value is larger than the maximum pages available the last page will be returned. If a value less than 1 is specified the first page will be returned. Collection information is available in the headers.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "perPage",
+            "in": "query",
+            "description": "The number of records to include in a single page. If a value of less than 1 is specified a best effort to return the whole collection will be made. This is not guaranteed and the response headers should be checked to obtain any additional pages.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "fields",
+            "in": "query",
+            "description": "A comma separated list of property fields that should be included in the response model. These values must exist as a properties of the response object. The id field will always be returned regardless.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "description": "A URL encoded query filter. For more information on filter formats see the documentation.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A collection (or subset) of users based on the callers privileges and the query parameters.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/user"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "If the request is badly formatted. For specific information see the message in the response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "If the credentials used to make the call are invalid or expired.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "If the request is badly formatted. For specific information see the message in the response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "On rare occasions it is possible that a requests triggers an undefined error. These are reported automatically to the development team.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          }
+        }
       },
       "post": {
         "summary": "create_user"
@@ -279,7 +473,104 @@
     },
     "/users/{userId}/roles": {
       "get": {
-        "summary": "get_user_roles"
+        "summary": "get_user_roles",
+        "parameters": [
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "The field name that should be used to sort the resulting collection. This value must exist as a property of the response object otherwise a default sort will be applied.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "The page number to request. If the value is larger than the maximum pages available the last page will be returned. If a value less than 1 is specified the first page will be returned. Collection information is available in the headers.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "perPage",
+            "in": "query",
+            "description": "The number of records to include in a single page. If a value of less than 1 is specified a best effort to return the whole collection will be made. This is not guaranteed and the response headers should be checked to obtain any additional pages.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "fields",
+            "in": "query",
+            "description": "A comma separated list of property fields that should be included in the response model. These values must exist as a properties of the response object. The id field will always be returned regardless.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "description": "A URL encoded query filter. For more information on filter formats see the documentation.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A collection (or subset) of user roles based on the callers privileges and the query parameters.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/role"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "If the request is badly formatted. For specific information see the message in the response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "If the credentials used to make the call are invalid or expired.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "If the request is badly formatted. For specific information see the message in the response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "On rare occasions it is possible that a requests triggers an undefined error. These are reported automatically to the development team.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          }
+        }
       },
       "parameters": [
         {
@@ -323,7 +614,104 @@
     },
     "/users/{userId}/groups": {
       "get": {
-        "summary": "get_user_groups"
+        "summary": "get_user_groups",
+        "parameters": [
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "The field name that should be used to sort the resulting collection. This value must exist as a property of the response object otherwise a default sort will be applied.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "The page number to request. If the value is larger than the maximum pages available the last page will be returned. If a value less than 1 is specified the first page will be returned. Collection information is available in the headers.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "perPage",
+            "in": "query",
+            "description": "The number of records to include in a single page. If a value of less than 1 is specified a best effort to return the whole collection will be made. This is not guaranteed and the response headers should be checked to obtain any additional pages.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "fields",
+            "in": "query",
+            "description": "A comma separated list of property fields that should be included in the response model. These values must exist as a properties of the response object. The id field will always be returned regardless.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "description": "A URL encoded query filter. For more information on filter formats see the documentation.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A collection (or subset) of user groups based on the callers privileges and the query parameters.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/group"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "If the request is badly formatted. For specific information see the message in the response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "If the credentials used to make the call are invalid or expired.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "If the request is badly formatted. For specific information see the message in the response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "On rare occasions it is possible that a requests triggers an undefined error. These are reported automatically to the development team.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          }
+        }
       },
       "parameters": [
         {
@@ -367,7 +755,104 @@
     },
     "/groups": {
       "get": {
-        "summary": "get_groups"
+        "summary": "get_groups",
+        "parameters": [
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "The field name that should be used to sort the resulting collection. This value must exist as a property of the response object otherwise a default sort will be applied.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "The page number to request. If the value is larger than the maximum pages available the last page will be returned. If a value less than 1 is specified the first page will be returned. Collection information is available in the headers.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "perPage",
+            "in": "query",
+            "description": "The number of records to include in a single page. If a value of less than 1 is specified a best effort to return the whole collection will be made. This is not guaranteed and the response headers should be checked to obtain any additional pages.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "fields",
+            "in": "query",
+            "description": "A comma separated list of property fields that should be included in the response model. These values must exist as a properties of the response object. The id field will always be returned regardless.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "description": "A URL encoded query filter. For more information on filter formats see the documentation.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A collection (or subset) of groups based on the callers privileges and the query parameters.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/group"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "If the request is badly formatted. For specific information see the message in the response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "If the credentials used to make the call are invalid or expired.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "If the request is badly formatted. For specific information see the message in the response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "On rare occasions it is possible that a requests triggers an undefined error. These are reported automatically to the development team.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          }
+        }
       },
       "post": {
         "summary": "create_group"
@@ -413,7 +898,104 @@
     },
     "/groups/{groupId}/roles": {
       "get": {
-        "summary": "get_group_roles"
+        "summary": "get_group_roles",
+        "parameters": [
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "The field name that should be used to sort the resulting collection. This value must exist as a property of the response object otherwise a default sort will be applied.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "The page number to request. If the value is larger than the maximum pages available the last page will be returned. If a value less than 1 is specified the first page will be returned. Collection information is available in the headers.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "perPage",
+            "in": "query",
+            "description": "The number of records to include in a single page. If a value of less than 1 is specified a best effort to return the whole collection will be made. This is not guaranteed and the response headers should be checked to obtain any additional pages.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "fields",
+            "in": "query",
+            "description": "A comma separated list of property fields that should be included in the response model. These values must exist as a properties of the response object. The id field will always be returned regardless.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "description": "A URL encoded query filter. For more information on filter formats see the documentation.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A collection (or subset) of group roles based on the callers privileges and the query parameters.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/role"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "If the request is badly formatted. For specific information see the message in the response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "If the credentials used to make the call are invalid or expired.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "If the request is badly formatted. For specific information see the message in the response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "On rare occasions it is possible that a requests triggers an undefined error. These are reported automatically to the development team.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          }
+        }
       },
       "parameters": [
         {
@@ -457,7 +1039,104 @@
     },
     "/groups/{groupId}/users": {
       "get": {
-        "summary": "get_group_users"
+        "summary": "get_group_users",
+        "parameters": [
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "The field name that should be used to sort the resulting collection. This value must exist as a property of the response object otherwise a default sort will be applied.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "The page number to request. If the value is larger than the maximum pages available the last page will be returned. If a value less than 1 is specified the first page will be returned. Collection information is available in the headers.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "perPage",
+            "in": "query",
+            "description": "The number of records to include in a single page. If a value of less than 1 is specified a best effort to return the whole collection will be made. This is not guaranteed and the response headers should be checked to obtain any additional pages.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "fields",
+            "in": "query",
+            "description": "A comma separated list of property fields that should be included in the response model. These values must exist as a properties of the response object. The id field will always be returned regardless.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "description": "A URL encoded query filter. For more information on filter formats see the documentation.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A collection (or subset) of group users based on the callers privileges and the query parameters.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/user"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "If the request is badly formatted. For specific information see the message in the response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "If the credentials used to make the call are invalid or expired.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "If the request is badly formatted. For specific information see the message in the response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "On rare occasions it is possible that a requests triggers an undefined error. These are reported automatically to the development team.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          }
+        }
       },
       "parameters": [
         {
@@ -473,7 +1152,104 @@
     },
     "/roles": {
       "get": {
-        "summary": "get_roles"
+        "summary": "get_roles",
+        "parameters": [
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "The field name that should be used to sort the resulting collection. This value must exist as a property of the response object otherwise a default sort will be applied.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "The page number to request. If the value is larger than the maximum pages available the last page will be returned. If a value less than 1 is specified the first page will be returned. Collection information is available in the headers.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "perPage",
+            "in": "query",
+            "description": "The number of records to include in a single page. If a value of less than 1 is specified a best effort to return the whole collection will be made. This is not guaranteed and the response headers should be checked to obtain any additional pages.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "fields",
+            "in": "query",
+            "description": "A comma separated list of property fields that should be included in the response model. These values must exist as a properties of the response object. The id field will always be returned regardless.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "description": "A URL encoded query filter. For more information on filter formats see the documentation.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A collection (or subset) of roles based on the callers privileges and the query parameters.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/role"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "If the request is badly formatted. For specific information see the message in the response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "If the credentials used to make the call are invalid or expired.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "If the request is badly formatted. For specific information see the message in the response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "On rare occasions it is possible that a requests triggers an undefined error. These are reported automatically to the development team.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          }
+        }
       },
       "post": {
         "summary": "create_role"
@@ -547,7 +1323,104 @@
     },
     "/logs/groups": {
       "get": {
-        "summary": "get_log_groups"
+        "summary": "get_log_groups",
+        "parameters": [
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "The field name that should be used to sort the resulting collection. This value must exist as a property of the response object otherwise a default sort will be applied.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "The page number to request. If the value is larger than the maximum pages available the last page will be returned. If a value less than 1 is specified the first page will be returned. Collection information is available in the headers.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "perPage",
+            "in": "query",
+            "description": "The number of records to include in a single page. If a value of less than 1 is specified a best effort to return the whole collection will be made. This is not guaranteed and the response headers should be checked to obtain any additional pages.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "fields",
+            "in": "query",
+            "description": "A comma separated list of property fields that should be included in the response model. These values must exist as a properties of the response object. The id field will always be returned regardless.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "description": "A URL encoded query filter. For more information on filter formats see the documentation.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A collection (or subset) of log groups based on the callers privileges and the query parameters.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/log_group"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "If the request is badly formatted. For specific information see the message in the response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "If the credentials used to make the call are invalid or expired.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "If the request is badly formatted. For specific information see the message in the response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "On rare occasions it is possible that a requests triggers an undefined error. These are reported automatically to the development team.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/logs/groups/{groupId}": {
@@ -571,7 +1444,104 @@
     },
     "/logs/groups/{groupId}/streams": {
       "get": {
-        "summary": "get_log_streams"
+        "summary": "get_log_streams",
+        "parameters": [
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "The field name that should be used to sort the resulting collection. This value must exist as a property of the response object otherwise a default sort will be applied.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "The page number to request. If the value is larger than the maximum pages available the last page will be returned. If a value less than 1 is specified the first page will be returned. Collection information is available in the headers.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "perPage",
+            "in": "query",
+            "description": "The number of records to include in a single page. If a value of less than 1 is specified a best effort to return the whole collection will be made. This is not guaranteed and the response headers should be checked to obtain any additional pages.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "fields",
+            "in": "query",
+            "description": "A comma separated list of property fields that should be included in the response model. These values must exist as a properties of the response object. The id field will always be returned regardless.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "description": "A URL encoded query filter. For more information on filter formats see the documentation.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A collection (or subset) of log streams based on the callers privileges and the query parameters.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/log_stream"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "If the request is badly formatted. For specific information see the message in the response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "If the credentials used to make the call are invalid or expired.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "If the request is badly formatted. For specific information see the message in the response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "On rare occasions it is possible that a requests triggers an undefined error. These are reported automatically to the development team.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          }
+        }
       },
       "parameters": [
         {
@@ -612,7 +1582,104 @@
     },
     "/logs/groups/{groupId}/streams/{streamId}/events": {
       "get": {
-        "summary": "get_log_events"
+        "summary": "get_log_events",
+        "parameters": [
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "The field name that should be used to sort the resulting collection. This value must exist as a property of the response object otherwise a default sort will be applied.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "The page number to request. If the value is larger than the maximum pages available the last page will be returned. If a value less than 1 is specified the first page will be returned. Collection information is available in the headers.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "perPage",
+            "in": "query",
+            "description": "The number of records to include in a single page. If a value of less than 1 is specified a best effort to return the whole collection will be made. This is not guaranteed and the response headers should be checked to obtain any additional pages.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "fields",
+            "in": "query",
+            "description": "A comma separated list of property fields that should be included in the response model. These values must exist as a properties of the response object. The id field will always be returned regardless.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "description": "A URL encoded query filter. For more information on filter formats see the documentation.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A collection (or subset) of log events based on the callers privileges and the query parameters.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/log_event"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "If the request is badly formatted. For specific information see the message in the response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "If the credentials used to make the call are invalid or expired.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "If the request is badly formatted. For specific information see the message in the response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "On rare occasions it is possible that a requests triggers an undefined error. These are reported automatically to the development team.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          }
+        }
       },
       "parameters": [
         {
@@ -671,7 +1738,104 @@
     },
     "/apikeys": {
       "get": {
-        "summary": "get_api_keys"
+        "summary": "get_api_keys",
+        "parameters": [
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "The field name that should be used to sort the resulting collection. This value must exist as a property of the response object otherwise a default sort will be applied.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "The page number to request. If the value is larger than the maximum pages available the last page will be returned. If a value less than 1 is specified the first page will be returned. Collection information is available in the headers.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "perPage",
+            "in": "query",
+            "description": "The number of records to include in a single page. If a value of less than 1 is specified a best effort to return the whole collection will be made. This is not guaranteed and the response headers should be checked to obtain any additional pages.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "fields",
+            "in": "query",
+            "description": "A comma separated list of property fields that should be included in the response model. These values must exist as a properties of the response object. The id field will always be returned regardless.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "description": "A URL encoded query filter. For more information on filter formats see the documentation.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A collection (or subset) of api keys belonging to the callers and based on the query parameters.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/api_key"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "If the request is badly formatted. For specific information see the message in the response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "If the credentials used to make the call are invalid or expired.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "If the request is badly formatted. For specific information see the message in the response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "On rare occasions it is possible that a requests triggers an undefined error. These are reported automatically to the development team.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          }
+        }
       },
       "post": {
         "summary": "create_api_key"
