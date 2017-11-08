@@ -76,7 +76,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemaserror"
+                  "$ref": "#/components/schemas/error"
                 }
               }
             }
@@ -86,7 +86,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemaserror"
+                  "$ref": "#/components/schemas/error"
                 }
               }
             }
@@ -96,7 +96,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemaserror"
+                  "$ref": "#/components/schemas/error"
                 }
               }
             }
@@ -106,7 +106,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemaserror"
+                  "$ref": "#/components/schemas/error"
                 }
               }
             }
@@ -4243,7 +4243,75 @@
     "/batches": {
       "post": {
         "summary": "execute_batch_requests",
-        "description": "Executes a custom collection of requests in a single call."
+        "description": "Executes a custom collection of requests in a single call.",
+        "responses": {
+          "200": {
+            "description": "The response of all the individual requests processed as part of the batch.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/batch_response"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "If the request is badly formatted. For specific information see the message in the response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "If the credentials used to make the call are invalid or expired.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "If the caller has insufficient privileges to perform the requested action.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "On rare occasions it is possible that a requests triggers an undefined error. These are reported automatically to the development team.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/batch_request"
+                }
+              }
+            }
+          },
+          "required": true
+        }
       }
     },
     "/validations": {
