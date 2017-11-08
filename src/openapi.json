@@ -271,7 +271,44 @@
             "type": "string"
           }
         }
-      }
+      },
+      "new_account": {
+        "properties": {
+          "account": {
+            "$ref": "#/components/schemas/account",
+            "description": "The new account that will be created and the specified user will be added to."
+          },
+          "user": {
+            "$ref": "#/components/schemas/user",
+            "description": "The new root user that will be associated with the account."
+          }
+        }
+      },
+      "batch_request": {
+        "properties": {
+          "id": {
+            "description": "An optional but recommended id value to be able to match the response in the response collection to the original request. If one is not provided a random one will be generated and appended to the response.",
+            "type": "string"
+          },
+          "method": {
+            "description": "The HTTP method associated with the request. Values can be `GET`, `PATCH`, `PUT`, `POST`, `DELETE`, `CONNECT`, `HEAD`, `TRACE` or `OPTIONS`",
+            "type": "string"
+          },
+          "path": {
+            "description": "The full path of the request starting with forward slash (/). e.g. /users",
+            "type": "string"
+          },
+          "queryParameters": {
+            "$ref": "#/components/schemas/object",
+            "description": "An optional map of query parameter values to pass as part of the request."
+          },
+          "body": {
+            "$ref": "#/components/schemas/object",
+            "description": "Any object that the request body is expecting."
+          }
+        }
+      },
+      "object": {}
     },
     "securitySchemes": {
       "basic_auth": {
