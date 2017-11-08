@@ -4244,6 +4244,16 @@
       "post": {
         "summary": "execute_batch_requests",
         "description": "Executes a custom collection of requests in a single call.",
+        "parameters": [
+          {
+            "name": "parallel",
+            "in": "query",
+            "description": "By default all batch operations will be processed in parallel. This means that there is no guarantee of the execution order. If the order is critical this flag can be set to false and a best effort will be made to execute the requests in the order they appear in the collection.",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "The response of all the individual requests processed as part of the batch.",
