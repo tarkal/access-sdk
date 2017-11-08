@@ -308,7 +308,27 @@
           }
         }
       },
-      "object": {}
+      "object": {},
+      "batch_response": {
+        "properties": {
+          "request": {
+            "$ref": "#/components/schemas/batch_request",
+            "description": "The original batch request object that was executed."
+          },
+          "statusCode": {
+            "description": "The HTTP status code of the response from the original request.",
+            "type": "integer"
+          },
+          "headers": {
+            "$ref": "#/components/schemas/object",
+            "description": "A map of string HTTP headers that where returned in the original request response."
+          },
+          "body": {
+            "$ref": "#/components/schemas/object",
+            "description": "The optional body returned in the original request response"
+          }
+        }
+      }
     },
     "securitySchemes": {
       "basic_auth": {
