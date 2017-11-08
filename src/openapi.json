@@ -11,7 +11,175 @@
     "version": "1.0.0"
   },
   "paths": {
-    "/accounts": {},
+    "/accounts": {
+      "get": {
+        "summary": "get_accounts",
+        "description": "Retrieves a collection of accounts.",
+        "parameters": [
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "The field name that should be used to sort the resulting collection. This value must exist as a property of the response object otherwise a default sort will be applied.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "The page number to request. If the value is larger than the maximum pages available the last page will be returned. If a value less than 1 is specified the first page will be returned. Collection information is available in the headers.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "perPage",
+            "in": "query",
+            "description": "The number of records to include in a single page. If a value of less than 1 is specified a best effort to return the whole collection will be made. This is not guaranteed and the response headers should be checked to obtain any additional pages.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "fields",
+            "in": "query",
+            "description": "A comma separated list of property fields that should be included in the response model. These values must exist as a properties of the response object. The id field will always be returned regardless.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "description": "A URL encoded query filter. For more information on filter formats see the documentation.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A collection (or subset) of accounts based on the callers privileges and the query parameters.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/user"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "If the request is badly formatted. For specific information see the message in the response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "If the credentials used to make the call are invalid or expired.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "If the request is badly formatted. For specific information see the message in the response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "On rare occasions it is possible that a requests triggers an undefined error. These are reported automatically to the development team.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "create_account",
+        "description": "Creates a new account with a root user. Both actions are considered to be part of the same atomic operation. If either fail the request will return an error and neither resource will be created.",
+        "responses": {
+          "201": {
+            "description": "The created `new_account` containing both the root user and the account. These will include the auto generated id.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemasnew_account"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "If the request is badly formatted. For specific information see the message in the response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "If the credentials used to make the call are invalid or expired.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "If the request is badly formatted. For specific information see the message in the response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "On rare occasions it is possible that a requests triggers an undefined error. These are reported automatically to the development team.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemasnew_account"
+              }
+            }
+          },
+          "required": true
+        }
+      }
+    },
     "/accounts/{accountId}": {},
     "/accounts/{accountId}/datas": {},
     "/accounts/{accountId}/users": {},
@@ -361,6 +529,18 @@
           "body": {
             "$ref": "#/components/schemas/object",
             "description": "The optional body returned in the original request response"
+          }
+        }
+      },
+      "error": {
+        "properties": {
+          "code": {
+            "description": "The HTTP error code. For more information see https://en.wikipedia.org/wiki/List_of_HTTP_status_codes.",
+            "type": "integer"
+          },
+          "message": {
+            "description": "The error message.",
+            "type": "string"
           }
         }
       }
