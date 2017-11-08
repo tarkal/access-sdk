@@ -98,7 +98,42 @@
             "description": "A multimap defining a custom collection of KSVP (Key Set Value Pair)"
           }
         }
-      }
+      },
+      "rule": {
+        "properties": {
+          "id": {
+            "description": "An optional field identifier.",
+            "type": "string"
+          },
+          "field": {
+            "description": "The optional GUI field. Even though this property is optional it is recommended or the GUI may fail to recognise the field.",
+            "type": "string"
+          },
+          "type": {
+            "description": "The optional field type. If specified a best effort will be made to perform a type cast at evaluation time of the value. If no type is specified or the cast fails the value will be evaluated as a string.",
+            "type": "string"
+          },
+          "input": {
+            "description": "The required field input name. During a rule evaluation the pattern is [input] [operator] [value]. e.g. [id] [equal] [123]",
+            "type": "string"
+          },
+          "operator": {
+            "description": "The required operator to define the evaluation comparison that must be achieved during evaluation. These values can be: `equal`, `not equal`, `in`, `not in`, `start`, `not start`, `end`, `not end`, `less`, `less or equal`, `greater`, `greater or equal`.",
+            "type": "string"
+          },
+          "value": {
+            "description": "The required field input value. All value types are serialised to a string for transport. The `type` property is used to type cast the value at evaluation time. During a rule evaluation the pattern is [input] [operator] [value]. e.g. [id] [equal] [123]",
+            "type": "string"
+          },
+          "expression": {
+            "$ref": "#/components/schemas/expression",
+            "description": "An optional sub-expression to evaluate as part of this rule."
+          }
+        }
+      },
+      "expression": {},
+      "statement": {},
+      "role": {}
     },
     "securitySchemes": {
       "basic_auth": {
