@@ -14,7 +14,7 @@
     "/accounts": {
       "get": {
         "summary": "get_accounts",
-        "description": "Retrieves a collection of accounts.",
+        "description": "Retrieve a collection of accounts.",
         "parameters": [
           {
             "name": "sort",
@@ -115,7 +115,7 @@
       },
       "post": {
         "summary": "create_account",
-        "description": "Creates a new account with a root user. Both actions are considered to be part of the same atomic operation. If either fail the request will return an error and neither resource will be created.",
+        "description": "Create a new account with a root user. Both actions are considered to be part of the same atomic operation. If either fail the request will return an error and neither resource will be created.",
         "responses": {
           "201": {
             "description": "The created `new_account` containing both the root user and the account. These will include the auto generated id.",
@@ -182,13 +182,16 @@
     },
     "/accounts/{accountId}": {
       "get": {
-        "summary": "get_account"
+        "summary": "get_account",
+        "description": "Retrieve a specific account by its id."
       },
       "delete": {
-        "summary": "delete_account"
+        "summary": "delete_account",
+        "description": "Delete an account along with all its associated resource and users."
       },
       "patch": {
-        "summary": "modify_account"
+        "summary": "modify_account",
+        "description": "Modify an account. Only supplied properties that differ from the existing will be patched."
       },
       "parameters": [
         {
@@ -204,7 +207,8 @@
     },
     "/accounts/{accountId}/datas": {
       "put": {
-        "summary": "update_account_data"
+        "summary": "update_account_data",
+        "description": "Update an account data with a new one. The operation is idempotent and the entire model is replaced. To set the data object as empty you must put an object with a single empty KVP: { \"\": [] }"
       },
       "parameters": [
         {
@@ -221,6 +225,7 @@
     "/accounts/{accountId}/users": {
       "get": {
         "summary": "get_account_users",
+        "description": "Retrieve a collection of account users.",
         "parameters": [
           {
             "name": "sort",
@@ -334,6 +339,7 @@
     "/users": {
       "get": {
         "summary": "get_users",
+        "description": "Retrieve a collection of users.",
         "parameters": [
           {
             "name": "sort",
@@ -433,18 +439,84 @@
         }
       },
       "post": {
-        "summary": "create_user"
+        "summary": "create_user",
+        "description": "Create a new user.",
+        "responses": {
+          "201": {
+            "description": "The created `user` including the auto generated id.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemasuser"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "If the request is badly formatted. For specific information see the message in the response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "If the credentials used to make the call are invalid or expired.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "If the request is badly formatted. For specific information see the message in the response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "On rare occasions it is possible that a requests triggers an undefined error. These are reported automatically to the development team.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemasuser"
+              }
+            }
+          },
+          "required": true
+        }
       }
     },
     "/users/{userId}": {
       "get": {
-        "summary": "get_user"
+        "summary": "get_user",
+        "description": "Retrieve a specific user by its id."
       },
       "delete": {
-        "summary": "delete_user"
+        "summary": "delete_user",
+        "description": "Delete a user."
       },
       "patch": {
-        "summary": "modify_user"
+        "summary": "modify_user",
+        "description": "Modify a user. Only supplied properties that differ from the existing will be patched. Note that groups, roles and data have separate functions. Including or omitting them from this function will have no effect."
       },
       "parameters": [
         {
@@ -460,7 +532,8 @@
     },
     "/users/{userId}/datas": {
       "put": {
-        "summary": "update_user_data"
+        "summary": "update_user_data",
+        "description": "Update a user data with a new one. The operation is idempotent and the entire model is replaced. To set the data object as empty you must put an object with a single empty KVP: { \"\": [] }"
       },
       "parameters": [
         {
@@ -474,6 +547,7 @@
     "/users/{userId}/roles": {
       "get": {
         "summary": "get_user_roles",
+        "description": "Retrieve a collection of user roles.",
         "parameters": [
           {
             "name": "sort",
@@ -586,10 +660,12 @@
     },
     "/users/{userId}/roles/{roleId}": {
       "put": {
-        "summary": "add_role_to_user"
+        "summary": "add_role_to_user",
+        "description": "Add a role to a user. Note that this function does not create the user or the role. Both must already exist. This function simply creates a binding between them."
       },
       "delete": {
-        "summary": "remove_role_from_user"
+        "summary": "remove_role_from_user",
+        "description": "Removes a role from a user. Note that this function does not delete the role, it simply removes the binding between them."
       },
       "parameters": [
         {
@@ -615,6 +691,7 @@
     "/users/{userId}/groups": {
       "get": {
         "summary": "get_user_groups",
+        "description": "Retrieve a collection of user groups.",
         "parameters": [
           {
             "name": "sort",
@@ -727,10 +804,12 @@
     },
     "/users/{userId}/groups/{groupId}": {
       "put": {
-        "summary": "add_group_to_user"
+        "summary": "add_group_to_user",
+        "description": "Add a group to a user. Note that this function does not create the group or the user. Both must already exist. This function simply creates a binding between them."
       },
       "delete": {
-        "summary": "remove_group_from_user"
+        "summary": "remove_group_from_user",
+        "description": "Removes a group from a user. Note that this function does not delete the group, it simply removes the binding between them."
       },
       "parameters": [
         {
@@ -756,6 +835,7 @@
     "/groups": {
       "get": {
         "summary": "get_groups",
+        "description": "Retrieve a collection of groups.",
         "parameters": [
           {
             "name": "sort",
@@ -855,18 +935,84 @@
         }
       },
       "post": {
-        "summary": "create_group"
+        "summary": "create_group",
+        "description": "Create a new group.",
+        "responses": {
+          "201": {
+            "description": "The created `group` including the auto generated id.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemasgroup"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "If the request is badly formatted. For specific information see the message in the response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "If the credentials used to make the call are invalid or expired.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "If the request is badly formatted. For specific information see the message in the response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "On rare occasions it is possible that a requests triggers an undefined error. These are reported automatically to the development team.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemasgroup"
+              }
+            }
+          },
+          "required": true
+        }
       }
     },
     "/groups/{groupId}": {
       "get": {
-        "summary": "get_group"
+        "summary": "get_group",
+        "description": "Retrieve a specific group by its id."
       },
       "delete": {
-        "summary": "delete_group"
+        "summary": "delete_group",
+        "description": "Delete a group. All associated roles will be released and all linked users will lose their associated roles."
       },
       "patch": {
-        "summary": "modify_group"
+        "summary": "modify_group",
+        "description": "Modify a user. Only supplied properties that differ from the existing will be patched. Note that roles and data have separate functions. Including or omitting them from this function will have no effect."
       },
       "parameters": [
         {
@@ -882,7 +1028,8 @@
     },
     "/groups/{groupId}/datas": {
       "put": {
-        "summary": "update_group_data"
+        "summary": "update_group_data",
+        "description": "Update a group data with a new one. The operation is idempotent and the entire model is replaced. To set the data object as empty you must put an object with a single empty KVP: { \"\": [] }"
       },
       "parameters": [
         {
@@ -899,6 +1046,7 @@
     "/groups/{groupId}/roles": {
       "get": {
         "summary": "get_group_roles",
+        "description": "Retrieve a collection of group roles.",
         "parameters": [
           {
             "name": "sort",
@@ -1011,10 +1159,12 @@
     },
     "/groups/{groupId}/roles/{roleId}": {
       "put": {
-        "summary": "add_role_to_group"
+        "summary": "add_role_to_group",
+        "description": "Add a role to a group. Note that this function does not create the group or the role. Both must already exist. This function simply creates a binding between them."
       },
       "delete": {
-        "summary": "remove_role_from_group"
+        "summary": "remove_role_from_group",
+        "description": "Removes a role from a group. Note that this function does not delete the role, it simply removes the binding between them."
       },
       "parameters": [
         {
@@ -1040,6 +1190,7 @@
     "/groups/{groupId}/users": {
       "get": {
         "summary": "get_group_users",
+        "description": "Retrieve a collection of group users.",
         "parameters": [
           {
             "name": "sort",
@@ -1153,6 +1304,7 @@
     "/roles": {
       "get": {
         "summary": "get_roles",
+        "description": "Retrieve a collection of roles.",
         "parameters": [
           {
             "name": "sort",
@@ -1252,18 +1404,84 @@
         }
       },
       "post": {
-        "summary": "create_role"
+        "summary": "create_role",
+        "description": "Create a new role.",
+        "responses": {
+          "201": {
+            "description": "The created `role` including the auto generated id.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemasrolet"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "If the request is badly formatted. For specific information see the message in the response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "If the credentials used to make the call are invalid or expired.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "If the request is badly formatted. For specific information see the message in the response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "On rare occasions it is possible that a requests triggers an undefined error. These are reported automatically to the development team.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemasrole"
+              }
+            }
+          },
+          "required": true
+        }
       }
     },
     "/roles/{roleId}": {
       "get": {
-        "summary": "get_role"
+        "summary": "get_role",
+        "description": "Retrieve a specific role by its id."
       },
       "delete": {
-        "summary": "delete_role"
+        "summary": "delete_role",
+        "description": "Delete a role. All linked users and groups will lose their associated privileges granted by this role."
       },
       "patch": {
-        "summary": "modify_role"
+        "summary": "modify_role",
+        "description": "Modify a role. Only supplied properties that differ from the existing will be patched. Note that statements have separate functions. Including or omitting them from this function will have no effect."
       },
       "parameters": [
         {
@@ -1279,7 +1497,73 @@
     },
     "/roles/{roleId}/statements": {
       "post": {
-        "summary": "create_statement_for_role"
+        "summary": "create_statement_for_role",
+        "description": "Creates and adds a statement to a role. Note that this function create the statement and binds it to the role in a single call.",
+        "responses": {
+          "201": {
+            "description": "A collection containing all the role statements including the latest addition.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/statement"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "If the request is badly formatted. For specific information see the message in the response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "If the credentials used to make the call are invalid or expired.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "If the request is badly formatted. For specific information see the message in the response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "On rare occasions it is possible that a requests triggers an undefined error. These are reported automatically to the development team.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemasstatement"
+              }
+            }
+          },
+          "required": true
+        }
       },
       "parameters": [
         {
@@ -1324,6 +1608,7 @@
     "/logs/groups": {
       "get": {
         "summary": "get_log_groups",
+        "description": "Retrieve a collection of log groups.",
         "parameters": [
           {
             "name": "sort",
@@ -1425,10 +1710,12 @@
     },
     "/logs/groups/{groupId}": {
       "get": {
-        "summary": "get_log_group"
+        "summary": "get_log_group",
+        "description": "Retrieve a specific log group by its id."
       },
       "delete": {
-        "summary": "delete_log_group"
+        "summary": "delete_log_group",
+        "description": "Delete a log group. All associated streams and events will be deleted in a cascade."
       },
       "parameters": [
         {
@@ -1445,6 +1732,7 @@
     "/logs/groups/{groupId}/streams": {
       "get": {
         "summary": "get_log_streams",
+        "description": "Retrieve a collection of log streams.",
         "parameters": [
           {
             "name": "sort",
@@ -1557,7 +1845,8 @@
     },
     "/logs/groups/{groupId}/streams/{streamId}": {
       "get": {
-        "summary": "get_log_stream"
+        "summary": "get_log_stream",
+        "description": "Retrieve a specific log stream by its id."
       },
       "parameters": [
         {
@@ -1583,6 +1872,7 @@
     "/logs/groups/{groupId}/streams/{streamId}/events": {
       "get": {
         "summary": "get_log_events",
+        "description": "Retrieve a collection of log events.",
         "parameters": [
           {
             "name": "sort",
@@ -1704,7 +1994,8 @@
     },
     "/logs/groups/{groupId}/streams/{streamId}/events/{eventId}": {
       "get": {
-        "summary": "get_log_event"
+        "summary": "get_log_event",
+        "description": "Retrieve a specific log event by its id."
       },
       "parameters": [
         {
@@ -1739,6 +2030,7 @@
     "/apikeys": {
       "get": {
         "summary": "get_api_keys",
+        "description": "Retrieve a collection of api keys for the caller.",
         "parameters": [
           {
             "name": "sort",
@@ -1838,18 +2130,74 @@
         }
       },
       "post": {
-        "summary": "create_api_key"
+        "summary": "create_api_key",
+        "description": "Create a new API key for the caller.",
+        "responses": {
+          "201": {
+            "description": "The created `api_key` containing both the id (public key) and the privateKey. Note this is the only time the private key is returned.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemasapi_key"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "If the request is badly formatted. For specific information see the message in the response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "If the credentials used to make the call are invalid or expired.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "If the request is badly formatted. For specific information see the message in the response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "On rare occasions it is possible that a requests triggers an undefined error. These are reported automatically to the development team.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemaserror"
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/apikeys/{apikeyId}": {
       "get": {
-        "summary": "get_api_key"
+        "summary": "get_api_key",
+        "description": "Retrieve a specific api key by its id."
       },
       "delete": {
-        "summary": "delete_api_key"
+        "summary": "delete_api_key",
+        "description": "Delete an API key. The key must belong to the caller."
       },
       "patch": {
-        "summary": "modify_api_key"
+        "summary": "modify_api_key",
+        "description": "Modify an api key. Only supplied properties that differ from the existing will be patched. Currently the only supported mutable parameter is the `state`."
       },
       "parameters": [
         {
@@ -1864,22 +2212,26 @@
     },
     "/privileges": {
       "get": {
-        "summary": "get_user_privileges"
+        "summary": "get_user_privileges",
+        "description": "Retrieve a collection of access privileges for the caller."
       }
     },
     "/sessions": {
       "post": {
-        "summary": "create_session"
+        "summary": "create_session",
+        "description": "Create a session between the client and the server."
       }
     },
     "/validations": {
       "put": {
-        "summary": "validate"
+        "summary": "validate",
+        "description": "Validate a new user account."
       }
     },
     "/batches": {
       "post": {
-        "summary": "execute_batch_requests"
+        "summary": "execute_batch_requests",
+        "description": "Executes a custom collection of requests in a single call."
       }
     }
   },
